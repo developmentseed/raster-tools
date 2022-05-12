@@ -9,6 +9,10 @@ Options:
   -o, --output PATH    Output file name
   --help               Show this message and exit.
 
+
+Requirements:
+- rasterio
+
 """
 
 import math
