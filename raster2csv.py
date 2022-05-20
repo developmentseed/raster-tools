@@ -78,14 +78,15 @@ def raster_to_pts(src_dst, blocksize: int = 1024):
         # Get row/col indexes
         rows, cols = numpy.where(mask == 0)
 
-        # Transform rows/cols index to coordinates in WGS84
-        xs, ys = xy(src_dst.transform, rows + w.row_off, cols + w.col_off)
-        lon, lat = transform(src_dst.crs, "epsg:4326", xs, ys)
+        if (len(rows) and len(cols)):
+            # Transform rows/cols index to coordinates in WGS84
+            xs, ys = xy(src_dst.transform, rows + w.row_off, cols + w.col_off)
+            lon, lat = transform(src_dst.crs, "epsg:4326", xs, ys)
 
-        # Loop through indexes and yield values
-        for ii, idx in enumerate(zip(cols, rows)):
-            x, y = idx
-            yield ([lon[ii], lat[ii]], list(data.data[:, y, x]))
+            # Loop through indexes and yield values
+            for ii, idx in enumerate(zip(cols, rows)):
+                x, y = idx
+                yield ([lon[ii], lat[ii]], list(data.data[:, y, x]))
 
 
 @click.command()
