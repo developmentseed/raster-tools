@@ -1,0 +1,5 @@
+name: raster2csv
+dependencies:
+  - numpy
+  - rasterio
+  - click
