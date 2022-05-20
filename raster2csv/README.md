@@ -1,9 +1,4 @@
-# Raster-tools
-
-Tools for raster processing
-
-
-### raster2csv.py
+# raster2csv.py
 
 a Rasterio based CLI to extract pixel values from raster.
 
@@ -12,7 +7,7 @@ a Rasterio based CLI to extract pixel values from raster.
 ```
 conda env create -f environment.yml
 ```
-### PIP
+### Pip
 ```
 pip install -r requirements.txt
 ```
