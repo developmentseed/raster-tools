@@ -1,0 +1,4 @@
+name: raster2mvt
+dependencies:
+  - rio-tiler
+  - rio-tiler-mvt

@@ -1,0 +1,3 @@
+name: raster2pixels
+dependencies:
+  - rio-tiler

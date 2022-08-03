@@ -1,0 +1,2 @@
+rio-tiler>=3.0
+rio-tiler-mvt>=0.1.0dev2
