@@ -23,6 +23,7 @@ from contextlib import ExitStack
 
 import click
 from rasterio.rio import options
+from rio_tiler.errors import TileOutsideBounds
 from rio_tiler.io import COGReader
 from rio_tiler_mvt import pixels_encoder
 
@@ -102,22 +103,25 @@ def main(
     )
 
     def _tiler(tile):
-        # return True
-        with COGReader(input) as src_dst:
-            tile_data = src_dst.tile(*tile, tilesize=tilesize)
-
         out_tile = pathlib.Path(f"{output}/{tile.z}/{tile.x}/{tile.y}.pbf")
         out_tile.parent.mkdir(parents=True, exist_ok=True)
 
-        body = pixels_encoder(
-            tile_data.data,
-            tile_data.mask,
-            band_names,
-            layer_name=name,
-            feature_type="polygon",
-        )
-        with out_tile.open(mode="wb") as f:
-            f.write(body)
+        try:
+            with COGReader(input) as src_dst:
+                tile_data = src_dst.tile(*tile, tilesize=tilesize)
+
+            body = pixels_encoder(
+                tile_data.data,
+                tile_data.mask,
+                band_names,
+                layer_name=name,
+                feature_type="polygon",
+            )
+            with out_tile.open(mode="wb") as f:
+                f.write(body)
+
+        except TileOutsideBounds:
+            pass
 
         return True
 
